@@ -8,5 +8,5 @@
 import Foundation
 
 public enum QIFParseError: LocalizedError {
-    case fileUnreadable, incorrect
+    case fileUnreadable, incorrectFormat
 }
