@@ -1,0 +1,141 @@
+//
+//  File.swift
+//  
+//
+//  Created by Bryce Campbell on 2/24/22.
+//
+
+import Foundation
+
+struct QIFTransaction {
+    var date: Date
+    var checkNumber: Int?
+    var vendor: String
+    var address: String
+    var amount: Double
+    var category: String?
+    var memo: String
+    var status: TransactionStatus?
+    
+    static let QIF_DATE_FORMATTER: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        return formatter
+    }()
+    
+    static let TRANSACTION_AMOUNT_FORMAT: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = ""
+        
+        return formatter
+    }()
+}
+
+extension QIFTransaction: LosslessStringConvertible {
+    var description: String {
+        
+        var statusValue = ""
+        
+        switch status {
+        case let .some(status): statusValue = status.rawValue
+        default: ()
+        }
+        
+        return """
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: date))
+        T\(amount)
+        C\(statusValue)
+        N\(checkNumber ?? 0)
+        P\(vendor)
+        M\(memo)
+        A\(address)
+        L\(category ?? "")
+        ^
+        """
+    }
+    
+    init?(_ description: String) {
+        guard let transactionString = description.matching(regexPattern: "(?:\\s*)?(?:D)?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]"), let firstMatch = transactionString.first else { return nil }
+        
+        var transactionValues: [String: String] = [:]
+        
+        transactionValues["date"] = firstMatch[1]
+        
+        for groupIndex in firstMatch.indices {
+            
+            guard groupIndex > 1 else { continue }
+            
+            if groupIndex.isMultiple(of: 2) {
+                let key = firstMatch[groupIndex]
+                let value = firstMatch[groupIndex+1]
+                
+                transactionValues[key] = value
+            }
+        }
+        
+        if let dateString = transactionValues["date"], let date = QIFTransaction.QIF_DATE_FORMATTER.date(from: dateString) {
+            self.date = date
+        } else {
+            date = Date()
+        }
+        
+        if let amountString = transactionValues["T"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
+            self.amount = amount.doubleValue
+        } else if let amountString = transactionValues["U"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
+            self.amount = amount.doubleValue
+        } else {
+            amount = 0
+        }
+        
+        if let checkNumber = transactionValues["N"] {
+            self.checkNumber = Int(checkNumber)
+        } else {
+            checkNumber = nil
+        }
+        
+        if let vendor = transactionValues["P"] {
+            self.vendor = vendor
+        } else {
+            vendor = ""
+        }
+        
+        if let address = transactionValues["A"] {
+            self.address = address
+        } else {
+            address = ""
+        }
+        
+        if let category = transactionValues["L"] {
+            self.category = category
+        } else {
+            category = nil
+        }
+        
+        if let memo = transactionValues["M"] {
+            self.memo = memo
+        } else {
+            memo = ""
+        }
+        
+        if let status = transactionValues["C"], !status.isEmpty {
+            self.status = TransactionStatus(rawValue: status)
+        } else {
+            status = nil
+        }
+    }
+}
+
+extension QIFTransaction: Equatable {
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        return lhs.checkNumber == rhs.checkNumber &&
+        lhs.vendor == rhs.vendor &&
+        lhs.address == rhs.address &&
+        lhs.amount == rhs.amount &&
+        lhs.category == rhs.category &&
+        lhs.memo == rhs.memo &&
+        lhs.status == rhs.status
+    }
+}
