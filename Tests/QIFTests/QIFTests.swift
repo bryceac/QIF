@@ -4,7 +4,7 @@ import XCTest
 final class QIFTests: XCTestCase {
     func parseTransaction() {
         let transactionText = """
-        D\(Date())
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
         CX
         N1260
@@ -78,5 +78,22 @@ final class QIFTests: XCTestCase {
         if let parsedQIF = QIF(text) {
             XCTAssertEqual(qif, parsedQIF)
         }
+    }
+    
+    func writeQIF() {
+        let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
+
+        let fakeStreetElectronics = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Fake Street Electronics", address: "Fake street Electronics", amount: -200, category: "Gifts", memo: "Head set", status: nil)
+
+        let velociraptorEntertainment = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Velociraptor Entertainment", address: "Velociraptor Entertainment", amount: 50000, category: nil, memo: "Pay Day", status: nil)
+        
+        let type = QIFType.bank
+        
+        let qif = QIF(type: type, transactions: [
+            samHill,
+            fakeStreetElectronics,
+            velociraptorEntertainment
+        ])
+
     }
 }
