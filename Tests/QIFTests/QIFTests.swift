@@ -21,4 +21,14 @@ final class QIFTests: XCTestCase {
             XCTAssertEqual(parsedTransaction, samHill)
         }
     }
+    
+    func parseType() {
+        let typeText = "!Type:Bank"
+        
+        let bank = QIFType.bank
+        
+        if let type = QIFType(typeText) {
+            XCTAssertEqual(type, bank)
+        }
+    }
 }
