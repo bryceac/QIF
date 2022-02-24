@@ -17,7 +17,7 @@ extension QIF: LosslessStringConvertible {
         var value = "!Type:\(type.rawValue)\r\n"
         
         for transaction in transactions {
-            value += "\(transaction)\r\n"
+            value += "\(transaction)\r\n\r\n"
         }
         return value
     }
