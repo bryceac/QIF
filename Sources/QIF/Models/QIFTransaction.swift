@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// QIFTransaction represents a non investment transaction in a QIF file.
 public struct QIFTransaction {
     public var date: Date
     public var checkNumber: Int?

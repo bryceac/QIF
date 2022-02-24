@@ -7,14 +7,20 @@
 
 import Foundation
 
+/// QIF represents a QIF document
 public struct QIF {
+    /// the type of transactions contain in the document
     public var type: QIFType
     public var transactions: [QIFTransaction]
 }
 
 extension QIF: LosslessStringConvertible {
+    
+    /**
+    the string representation of the QIF data. The string utilizes Windows newline sematics.
+     */
     public var description: String {
-        var value = "!Type:\(type.rawValue)\r\n"
+        var value = "!Type:\(type)\r\n"
         
         for transaction in transactions {
             value += "\(transaction)\r\n\r\n"
@@ -22,6 +28,7 @@ extension QIF: LosslessStringConvertible {
         return value
     }
     
+    /// attempt to initialize a QIF value from a given string.
     public init?(_ description: String) {
         guard let type = QIFType(description) else { return nil }
         
