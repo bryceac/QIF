@@ -55,3 +55,14 @@ extension QIF: Equatable {
         lhs.transactions == rhs.transactions
     }
 }
+
+extension QIF {
+    public static load(from file: URL) throws -> QIF {
+        let fileData = try Data(contentsOf: file)
+        guard let text = String(data: fileData, encoding: .utf8) else {
+            
+        }
+        
+        guard let qif = QIF(
+    }
+}
