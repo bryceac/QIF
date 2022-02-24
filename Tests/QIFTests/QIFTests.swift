@@ -59,7 +59,7 @@ final class QIFTests: XCTestCase {
         LOpening Balance
         ^
         
-        D\(Date())
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T-200
         PFake Street Electronics
         MHead set
@@ -67,7 +67,7 @@ final class QIFTests: XCTestCase {
         LGifts
         ^
         
-        D\(Date())
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T50000
         PVelociraptor Entertainment
         MPay Day
