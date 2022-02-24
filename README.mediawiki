@@ -1,3 +1,46 @@
 =QIF=
 
-A description of this package.
+'''Version:''' 0.1
+
+'''Author:''' Bryce Campbell
+
+'''Copyright:''' 2022
+
+'''Description:''' Library that can read and write QIF files.
+
+==Notes==
+
+This library is currently a <abbr title="work in progress">WIP</abbr>, 
+with integration testing yet be done, but 
+<strong>should</strong> work on any platform that can compile Swift.
+
+This project was created with the aim to be able to allow users 
+to import QIF files into 
+<a href="https://github.com/bryceac/BCheckbook">BCheckbook</a>, 
+so that data can be migrated easily.
+
+===Limits===
+
+Due to how I am processing the files, which utilizes Regex, 
+this library does not support multiple sections, 
+as it will only recognize the first <strong>!Type:</strong> instance.
+
+It may be possible to support multiple sections with what I have, 
+but I am not certain that it will work, 
+nor do I intend to support multiple sections right now.
+
+Another limitation of this library is that 
+it supports only noninvestment transactions and does not support splits.
+
+This is also by design, 
+as the Invoice section is not typical found in QIF files, 
+according to the 
+<a href="https://en.wikipedia.org/wiki/Quicken_Interchange_Format">QIF page</a> 
+on Wikipedia, and many fields become complicated when including other items.
+
+===Contributing===
+
+If you would like to help make this project even better, 
+feel free to create a fork and issue a pull request. 
+All code submitted be licensed under the same as license as 
+this project.
