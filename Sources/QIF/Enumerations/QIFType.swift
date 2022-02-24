@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum QIFType: String, CaseIterable {
+public enum QIFType: String, CaseIterable {
     case cash = "Cash", bank = "Bank", creditCard = "CCard", liability = "Oth L", asset = "Oth A"
 }
 

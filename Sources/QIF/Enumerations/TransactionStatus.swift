@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum TransactionStatus: String, CaseIterable {
+public enum TransactionStatus: String, CaseIterable {
     case cleared = "X", reconciled = "*"
 }

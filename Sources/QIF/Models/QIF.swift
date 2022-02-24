@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct QIF {
-    var type: QIFType
-    var transactions: [QIFTransaction]
+public struct QIF {
+    public var type: QIFType
+    public var transactions: [QIFTransaction]
 }
 
 extension QIF: LosslessStringConvertible {
-    var description: String {
+    public var description: String {
         var value = "!Type:\(type.rawValue)\r\n"
         
         for transaction in transactions {
@@ -22,7 +22,7 @@ extension QIF: LosslessStringConvertible {
         return value
     }
     
-    init?(_ description: String) {
+    public init?(_ description: String) {
         guard let type = QIFType(description) else { return nil }
         
         let transactionBlocks = description.components(separatedBy: "^")
@@ -43,7 +43,7 @@ extension QIF: LosslessStringConvertible {
 }
 
 extension QIF: Equatable {
-    static func ==(lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         return lhs.type == rhs.type &&
         lhs.transactions == rhs.transactions
     }

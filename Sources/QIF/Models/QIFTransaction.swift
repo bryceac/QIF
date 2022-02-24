@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct QIFTransaction {
-    var date: Date
-    var checkNumber: Int?
-    var vendor: String
-    var address: String
-    var amount: Double
-    var category: String?
-    var memo: String
-    var status: TransactionStatus?
+public struct QIFTransaction {
+    public var date: Date
+    public var checkNumber: Int?
+    public var vendor: String
+    public var address: String
+    public var amount: Double
+    public var category: String?
+    public var memo: String
+    public var status: TransactionStatus?
     
-    static let QIF_DATE_FORMATTER: DateFormatter = {
+    public static let QIF_DATE_FORMATTER: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -25,7 +25,7 @@ struct QIFTransaction {
         return formatter
     }()
     
-    static let TRANSACTION_AMOUNT_FORMAT: NumberFormatter = {
+    public static let TRANSACTION_AMOUNT_FORMAT: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencySymbol = ""
@@ -35,7 +35,7 @@ struct QIFTransaction {
 }
 
 extension QIFTransaction: LosslessStringConvertible {
-    var description: String {
+    public var description: String {
         
         var statusValue = ""
         
@@ -57,7 +57,7 @@ extension QIFTransaction: LosslessStringConvertible {
         """
     }
     
-    init?(_ description: String) {
+    public init?(_ description: String) {
         guard let transactionString = description.matching(regexPattern: "(?:\\s*)?(?:D)?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]"), let firstMatch = transactionString.first else { return nil }
         
         var transactionValues: [String: String] = [:]
@@ -129,7 +129,7 @@ extension QIFTransaction: LosslessStringConvertible {
 }
 
 extension QIFTransaction: Equatable {
-    static func ==(lhs: Self, rhs: Self) -> Bool {
+   public static func ==(lhs: Self, rhs: Self) -> Bool {
         return lhs.checkNumber == rhs.checkNumber &&
         lhs.vendor == rhs.vendor &&
         lhs.address == rhs.address &&
