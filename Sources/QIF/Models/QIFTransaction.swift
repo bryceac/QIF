@@ -20,8 +20,7 @@ public struct QIFTransaction {
     
     public static let QIF_DATE_FORMATTER: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateStyle = .short
         
         return formatter
     }()
