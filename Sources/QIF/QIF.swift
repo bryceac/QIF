@@ -17,34 +17,15 @@ extension QIF: LosslessStringConvertible {
         var value = "!Type:\(type.rawValue)\r\n"
         
         for transaction in transactions {
-            value += """
-            \(transaction)
-            \n
-            """
+            value += "\(transaction)\r\n"
         }
         return value
     }
     
     init?(_ description: String) {
-        guard let typeMatching = description.matching(regexPattern: "!Type:(.*)"), let firstMatch = typeMatching.first else { return nil }
+        guard let type = QIFType(description) else { return nil }
         
-        let typeString = firstMatch[1]
-        
-        guard let type = QIFType(rawValue: typeString) else { return nil }
-        
-        self.type = type
-        
-        var transactionBlocks = description.components(separatedBy: "^")
-        
-        transactionBlocks = transactionBlocks.indices.reduce(into: [], { initialValue, index in
-            if index == 0 {
-                let newString = transactionBlocks[index].components(separatedBy: "\n")
-                
-                initialValue.append(newString.dropFirst().joined(separator: "\n"))
-            } else {
-                initialValue.append(transactionBlocks[index])
-            }
-        })
+        let transactionBlocks = description.components(separatedBy: "^")
         
         var transactions: [QIFTransaction] = []
         
@@ -56,6 +37,7 @@ extension QIF: LosslessStringConvertible {
             transactions.append(transaction)
         }
         
+        self.type = type
         self.transactions = transactions
     }
 }
