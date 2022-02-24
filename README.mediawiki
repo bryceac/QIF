@@ -6,6 +6,8 @@
 
 '''Copyright:''' 2022
 
+'''License:''' See LICENSE
+
 '''Description:''' Library that can read and write QIF files.
 
 ==Notes==
