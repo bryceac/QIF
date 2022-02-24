@@ -49,7 +49,7 @@ final class QIFTests: XCTestCase {
         
         let text = """
         !Type:Bank
-        D\(Date())
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
         CX
         N1260
