@@ -57,6 +57,10 @@ extension QIF: Equatable {
 }
 
 extension QIF {
+    /**
+     load transaction from specified QIF file.
+     - Returns: Optional QIF model that will be nil if a !Type section cannot be found.
+     */
     public static func load(from file: URL) throws -> QIF? {
         let fileData = try Data(contentsOf: file)
         guard let text = String(data: fileData, encoding: .utf8) else { return nil }
