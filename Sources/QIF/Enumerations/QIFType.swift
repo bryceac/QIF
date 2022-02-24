@@ -12,11 +12,11 @@ public enum QIFType: String, CaseIterable {
 }
 
 extension QIFType: LosslessStringConvertible {
-    var description: String {
+    public var description: String {
         return self.rawValue
     }
     
-    init?(_ description: String) {
+    public init?(_ description: String) {
         guard let typeMatches = description.matching(regexPattern: "!Type:(.*)"), let firstMatch = typeMatches.first else { return nil }
         
         self.init(rawValue: firstMatch[1])
