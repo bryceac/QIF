@@ -97,7 +97,9 @@ final class QIFTests: XCTestCase {
         
         let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
-        XCTAssertNoThrow(try qif.save(to: DOCUMENTS_DIRECTORY.appendingPathComponent("test").appendingPathExtension("qif")))
+        let testFile = DOCUMENTS_DIRECTORY.appendingPathComponent("test").appendingPathExtension("qif")
+        
+        XCTAssertNoThrow(try qif.save(to: testFile))
     }
     
     func readFile() throws {
