@@ -60,24 +60,23 @@ final class QIFTests: XCTestCase {
         ^
         
         D\(Date())
-        T500
-        CX
-        N1260
-        PSam Hill Credit Union
-        MOpen Account
-        ASam Hill Credit Union
-        LOpening Balance
+        T-200
+        PFake Street Electronics
+        MHead set
+        AFake Street Electronics
+        LGifts
         ^
         
         D\(Date())
-        T500
-        CX
-        N1260
-        PSam Hill Credit Union
-        MOpen Account
-        ASam Hill Credit Union
-        LOpening Balance
+        T50000
+        PVelociraptor Entertainment
+        MPay Day
+        AVelociraptor Entertainment
         ^
         """
+        
+        if let parsedQIF = QIF(text) {
+            XCTAssertEqual(qif, parsedQIF)
+        }
     }
 }
