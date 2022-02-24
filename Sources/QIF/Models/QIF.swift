@@ -57,7 +57,7 @@ extension QIF: Equatable {
 }
 
 extension QIF {
-    public static load(from file: URL) throws -> QIF? {
+    public static func load(from file: URL) throws -> QIF? {
         let fileData = try Data(contentsOf: file)
         guard let text = String(data: fileData, encoding: .utf8) else { return nil }
         

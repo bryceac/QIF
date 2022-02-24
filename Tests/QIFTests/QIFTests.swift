@@ -94,6 +94,9 @@ final class QIFTests: XCTestCase {
             fakeStreetElectronics,
             velociraptorEntertainment
         ])
-
+        
+        let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        XCTAssertNoThrow(try qif.save(to: DOCUMENTS_DIRECTORY.appendingPathComponent("test").appendingPathExtension("qif")))
     }
 }
