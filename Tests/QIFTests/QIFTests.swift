@@ -6,7 +6,7 @@ final class QIFTests: XCTestCase {
         let transactionText = """
         D\(Date())
         T500
-        C*
+        CX
         N1260
         PSam Hill Credit Union
         MOpen Account
