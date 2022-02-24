@@ -58,6 +58,26 @@ final class QIFTests: XCTestCase {
         ASam Hill Credit Union
         LOpening Balance
         ^
+        
+        D\(Date())
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        
+        D\(Date())
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
         """
     }
 }
