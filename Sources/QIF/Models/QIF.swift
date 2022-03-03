@@ -33,7 +33,7 @@ extension QIF {
     }
 }
 
-extension QIF: CusomStringConvertible {
+extension QIF: CustomStringConvertible {
     
     /**
     the string representation of the QIF data. The string utilizes Windows newline sematics.
@@ -82,7 +82,9 @@ extension QIF {
      */
     public static func load(from file: URL) throws -> QIF {
         let fileData = try Data(contentsOf: file)
-        guard let text = String(data: fileData, encoding: .utf8) else { return nil }
+        guard let text = String(data: fileData, encoding: .utf8) else {
+            fatalError("Could not decode data.")
+        }
         
         let qif = try QIF(text)
         
