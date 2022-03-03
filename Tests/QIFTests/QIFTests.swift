@@ -17,7 +17,7 @@ final class QIFTests: XCTestCase {
         
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
         
-        if let parsedTransaction = QIFTransaction(transactionText) {
+        if let parsedTransaction = try? QIFTransaction(transactionText) {
             XCTAssertEqual(parsedTransaction, samHill)
         }
     }
@@ -27,12 +27,12 @@ final class QIFTests: XCTestCase {
         
         let bank = QIFType.bank
         
-        if let type = QIFType(typeText) {
+        if let type = try? QIFType(typeText) {
             XCTAssertEqual(type, bank)
         }
     }
     
-    func parseQIFString() {
+    func parseQIFString() throws {
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
 
         let fakeStreetElectronics = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Fake Street Electronics", address: "Fake street Electronics", amount: -200, category: "Gifts", memo: "Head set", status: nil)
@@ -75,9 +75,9 @@ final class QIFTests: XCTestCase {
         ^
         """
         
-        if let parsedQIF = QIF(text) {
-            XCTAssertEqual(qif, parsedQIF)
-        }
+        let parsedQIF = try QIF(text)
+        
+        XCTAssertEqual(qif, parsedQIF)
     }
     
     func writeQIF() {
@@ -121,8 +121,8 @@ final class QIFTests: XCTestCase {
         
         let testFile = DOCUMENTS_DIRECTORY.appendingPathComponent("test").appendingPathExtension("qif")
         
-        if let parsedQIF = try QIF.load(from: testFile) {
-            XCTAssertEqual(parsedQIF, qif)
-        }
+        let parsedQIF = try QIF.load(from: testFile)
+        
+        XCTAssertEqual(parsedQIF, qif)
     }
 }
