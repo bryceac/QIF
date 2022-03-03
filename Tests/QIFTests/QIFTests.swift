@@ -2,7 +2,7 @@ import XCTest
 @testable import QIF
 
 final class QIFTests: XCTestCase {
-    func parseTransaction() {
+    func parseTransaction() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -17,8 +17,25 @@ final class QIFTests: XCTestCase {
         
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
         
-        if let parsedTransaction = try? QIFTransaction(transactionText) {
-            XCTAssertEqual(parsedTransaction, samHill)
+        let parsedTransaction = try QIFTransaction(transactionText)
+            
+        XCTAssertEqual(parsedTransaction, samHill)
+    }
+    
+    func transactionParsingFailsDueToIncorrectFormat() {
+        let transactionText = """
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFTransaction(transactionText), "initialization should fail when date is missing") { error in
+            XCTAssertEqual(error as? TransactionParsingError, TransactionParsingError.incorrectFormat)
         }
     }
     
