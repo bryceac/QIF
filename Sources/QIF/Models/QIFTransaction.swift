@@ -58,7 +58,10 @@ extension QIFTransaction: LosslessStringConvertible {
     }
     
     public init?(_ description: String) {
-        guard let transactionString = description.matching(regexPattern: "(?:\\s*)?(?:D)?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]"), let firstMatch = transactionString.first else { return nil }
+        
+        let text = description.starts(with: "!Type:") ? description.components(separatedBy: .newlines).dropFirst().joined(separator: "/r/n") : description
+        
+        guard let transactionString = text.matching(regexPattern: "(?:\\s*)?(?:D)?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]"), let firstMatch = transactionString.first else { return nil }
         
         var transactionValues: [String: String] = [:]
         
