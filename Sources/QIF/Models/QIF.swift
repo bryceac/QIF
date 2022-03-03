@@ -15,7 +15,22 @@ public struct QIF {
 }
 
 extension QIF {
-    public init(_ text: String)
+    public init(_ text: String) throws {
+        let type = try QIFType(description)
+        
+        let transactionBlocks = description.components(separatedBy: "^")
+        
+        var transactions: [QIFTransaction] = []
+        
+        for block in transactionBlocks {
+            let transaction = try QIFTransaction(block)
+            
+            transactions.append(transaction)
+        }
+        
+        self.type = type
+        self.transactions = transactions
+    }
 }
 
 extension QIF: CusomStringConvertible {
