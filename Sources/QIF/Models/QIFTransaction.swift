@@ -36,7 +36,7 @@ public struct QIFTransaction {
 
 extension QIFTransaction {
     init(_ text: String) throws {
-        guard let transactionString = description.matching(regexPattern: "^D(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]$"), let firstMatch = transactionString.first else {
+        guard let transactionString = text.matching(regexPattern: "^D(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]$"), let firstMatch = transactionString.first else {
             throw TransactionParsingError.incorrectFormat
         }
         

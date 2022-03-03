@@ -13,7 +13,7 @@ public enum QIFType: String, CaseIterable {
 
 extension QIFType {
     init(_ text: String) throws {
-        guard let typeMatches = description.matching(regexPattern: "!Type:(.*)"), let firstMatch = typeMatches.first else {
+        guard let typeMatches = text.matching(regexPattern: "!Type:(.*)"), let firstMatch = typeMatches.first else {
             throw QIFTypeParsingError.incorrectFormat
         }
                 

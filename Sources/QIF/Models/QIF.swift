@@ -14,6 +14,10 @@ public struct QIF {
     public var transactions: [QIFTransaction]
 }
 
+extension QIF {
+    public init(_ text: String)
+}
+
 extension QIF: CusomStringConvertible {
     
     /**
