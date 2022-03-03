@@ -14,7 +14,7 @@ public struct QIF {
     public var transactions: [QIFTransaction]
 }
 
-extension QIF: LosslessStringConvertible {
+extension QIF: CusomStringConvertible {
     
     /**
     the string representation of the QIF data. The string utilizes Windows newline sematics.
@@ -29,7 +29,7 @@ extension QIF: LosslessStringConvertible {
     }
     
     /// attempt to initialize a QIF value from a given string.
-    public init?(_ description: String) {
+    /* public init?(_ description: String) {
         guard let type = QIFType(description) else { return nil }
         
         let transactionBlocks = description.components(separatedBy: "^")
@@ -46,7 +46,7 @@ extension QIF: LosslessStringConvertible {
         
         self.type = type
         self.transactions = transactions
-    }
+    } */
 }
 
 extension QIF: Equatable {

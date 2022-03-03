@@ -34,7 +34,7 @@ public struct QIFTransaction {
     }()
 }
 
-extension QIFTransaction: LosslessStringConvertible {
+extension QIFTransaction: CustomStringConvertible {
     public var description: String {
         
         var statusValue = ""
@@ -57,7 +57,7 @@ extension QIFTransaction: LosslessStringConvertible {
         """
     }
     
-    public init?(_ description: String) {
+    /* public init?(_ description: String) {
         
         guard let transactionString = description.matching(regexPattern: "^D(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*([T|U|C|N|P|M|A|L])?(.*)\\s*[^\\^]$"), let firstMatch = transactionString.first else { return nil }
         
@@ -126,7 +126,7 @@ extension QIFTransaction: LosslessStringConvertible {
         } else {
             status = nil
         }
-    }
+    } */
 }
 
 extension QIFTransaction: Equatable {
