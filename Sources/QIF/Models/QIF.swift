@@ -16,9 +16,9 @@ public struct QIF {
 
 extension QIF {
     public init(_ text: String) throws {
-        let type = try QIFType(description)
+        let type = try QIFType(text)
         
-        let transactionBlocks = description.components(separatedBy: "^")
+        let transactionBlocks = text.components(separatedBy: "^")
         
         var transactions: [QIFTransaction] = []
         
