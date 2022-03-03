@@ -22,13 +22,29 @@ final class QIFTests: XCTestCase {
         }
     }
     
-    func parseType() {
+    func parseType() throws {
         let typeText = "!Type:Bank"
         
         let bank = QIFType.bank
         
-        if let type = try? QIFType(typeText) {
-            XCTAssertEqual(type, bank)
+        let type = try QIFType(typeText)
+        
+        XCTAssertEqual(type, bank)
+    }
+    
+    func typeParseFailsDueToFormat() throws {
+        let typeText = "Bank"
+        
+        XCTAssertThrowsError(try QIFType(typeText), "initialization should fail if format is not correct") { error in
+            XCTAssertEqual(error as? QIFTypeParsingError, QIFTypeParsingError.incorrectFormat)
+        }
+    }
+    
+    func typeParsingFailsDueToInvalidType() {
+        let typeText = "Business"
+        
+        XCTAssertThrowsError(try QIFType(typeText), "initialization should fail if type is not found in enumeration") { error in
+            XCTAssertEqual(error as? QIFTypeParsingError, QIFTypeParsingError.invalidType)
         }
     }
     
