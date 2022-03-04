@@ -36,38 +36,42 @@ public struct QIFTransaction {
 
 extension QIFTransaction {
     init(_ text: String) throws {
-        let transactionValues: [String:String] = [:]
+        var transactionValues: [String:String] = [:]
         
         let lines = text.components(separatedBy: .newlines)
         
         for line in lines {
             switch line {
                 case let l where l.starts(with: "D"):
-                let date = String(l.dropFirst())
-                    print(date)
+                    let date = String(l.dropFirst())
+                    transactionValues["date"] = date
                 case let l where l.starts(with: "T") || l.starts(with: "U"):
                     let amount = String(l.dropFirst())
-                    print(amount)
+                    transactionValues["amount"] = amount
                 case let l where l.starts(with: "N"):
                     let checkNumber = String(l.dropFirst())
-                    print(checkNumber)
+                    transactionValues["checkNumber"] = checkNumber
                 case let l where l.starts(with: "P"):
                     let vendor = String(l.dropFirst())
-                    print(vendor)
+                    transactionValues["vendor"] = vendor
                 case let l where l.starts(with: "A"):
                     let address = String(l.dropFirst())
-                    print(address)
+                    transactionValues["address"] = address
                 case let l where l.starts(with: "L"):
                     let category = String(l.dropFirst())
-                    print(category)
+                    transactionValues["category"] = category
                 case let l where l.starts(with: "M"):
                     let memo = String(l.dropFirst())
-                    print(memo)
+                    transactionValues["memo"] = memo
                 case let l where l.starts(with: "C"):
                     let status = String(l.dropFirst())
-                    print(status)
+                    transactionValues["status"] = status
                 default: ()
             }
+        }
+        
+        guard let date = transactionValues["date"], let transactionDate = QIFTransaction.QIF_DATE_FORMATTER.date(from: date) else {
+            .none ~= transactionValues["date"] ? QIFTransactionParsingError.noDateFound : QIFTransactionParsingError.wrongDateFormat
         }
     }
 }

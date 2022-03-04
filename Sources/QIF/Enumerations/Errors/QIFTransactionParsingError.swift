@@ -8,13 +8,14 @@
 import Foundation
 
 enum QIFTransactionParsingError: LocalizedError {
-    case noDateFound
+    case noDateFound, wrongDateFormat
     
     var errorDescription: String? {
         var error = ""
         
         switch self {
         case .noDateFound: error = "Date could not be found"
+        case .wrongDateFormat: error = "Date must be in MM/DD/YYYY format"
         }
         
         return error
