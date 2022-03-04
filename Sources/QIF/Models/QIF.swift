@@ -23,6 +23,8 @@ extension QIF {
         var transactions: [QIFTransaction] = []
         
         for block in transactionBlocks {
+            guard !block.isEmpty else { continue }
+            
             let transaction = try QIFTransaction(block)
             
             transactions.append(transaction)
