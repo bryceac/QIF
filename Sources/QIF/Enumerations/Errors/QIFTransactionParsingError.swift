@@ -8,7 +8,7 @@
 import Foundation
 
 enum QIFTransactionParsingError: LocalizedError {
-    case noDateFound, wrongDateFormat
+    case noDateFound, wrongDateFormat, valueNotNumerical(value: String, field: String)
     
     var errorDescription: String? {
         var error = ""
@@ -16,6 +16,7 @@ enum QIFTransactionParsingError: LocalizedError {
         switch self {
         case .noDateFound: error = "Date could not be found"
         case .wrongDateFormat: error = "Date must be in MM/DD/YYYY format"
+        case .valueNotNumerical(let value, let field): error = "\(value) is an invalid value for \(field)"
         }
         
         return error

@@ -73,6 +73,10 @@ extension QIFTransaction {
         guard let date = transactionValues["date"], let transactionDate = QIFTransaction.QIF_DATE_FORMATTER.date(from: date) else {
             .none ~= transactionValues["date"] ? QIFTransactionParsingError.noDateFound : QIFTransactionParsingError.wrongDateFormat
         }
+        
+        guard let amount = transactionValues["amount"], let transactionAmount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amount) else {
+            
+        }
     }
 }
 
