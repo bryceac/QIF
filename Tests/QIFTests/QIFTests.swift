@@ -37,6 +37,22 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(transactionText))
     }
     
+    func transactionParsingFailsDueToWrongDateFormat() {
+        let testString = """
+        D03/04/20
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFTransaction(testString))
+    }
+    
     func parseType() throws {
         let typeText = "!Type:Bank"
         
