@@ -23,9 +23,7 @@ extension QIF {
         var transactions: [QIFTransaction] = []
         
         for block in transactionBlocks {
-            guard !block.isEmpty else { continue }
-            
-            let transaction = try QIFTransaction(block)
+            guard let transaction = try? QIFTransaction(block) else { continue }
             
             transactions.append(transaction)
         }
@@ -48,26 +46,6 @@ extension QIF: CustomStringConvertible {
         }
         return value
     }
-    
-    /// attempt to initialize a QIF value from a given string.
-    /* public init?(_ description: String) {
-        guard let type = QIFType(description) else { return nil }
-        
-        let transactionBlocks = description.components(separatedBy: "^")
-        
-        var transactions: [QIFTransaction] = []
-        
-        for block in transactionBlocks {
-            guard let transaction = QIFTransaction(block) else { continue }
-            
-            print(transaction)
-            
-            transactions.append(transaction)
-        }
-        
-        self.type = type
-        self.transactions = transactions
-    } */
 }
 
 extension QIF: Equatable {
