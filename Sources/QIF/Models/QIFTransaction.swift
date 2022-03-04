@@ -78,10 +78,13 @@ extension QIFTransaction {
             throw .none ~= transactionValues["amount"] ? QIFTransactionParsingError.fieldNotFound(field: "amount") : QIFTransactionParsingError.valueNotNumerical(value: transactionValues["amount"]!, field: "amount")
         }
         
-        guard .none ~= transactionValues["checkNumber"] || Int(transactionValues["checkNumber"]!) else {
-            if let checkNumber = transactionValues["checkNumber"] {
-                throw QIFTransactionParsingError.valueNotNumerical(value: checkNumber, field: "check number")
-            }
+        self.date = transactionDate
+        self.amount = transactionAmount
+        
+        if let checkNumber = transactionValues["checkNumber"], let transactionCheckNumber = Int(checkNumber) {
+            self.checkNumber = transactionCheckNumber
+        } else {
+            checkNumber = nil
         }
     }
 }
