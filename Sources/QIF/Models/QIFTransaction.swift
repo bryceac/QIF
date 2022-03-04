@@ -80,7 +80,7 @@ extension QIFTransaction {
         }
         
         self.date = transactionDate
-        self.amount = transactionAmount
+        self.amount = transactionAmount.doubleValue
         
         if let checkNumber = transactionValues["checkNumber"], let transactionCheckNumber = Int(checkNumber) {
             self.checkNumber = transactionCheckNumber
