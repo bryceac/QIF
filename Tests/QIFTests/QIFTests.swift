@@ -22,7 +22,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction, samHill)
     }
     
-    func transactionParsingFailsDueToIncorrectFormat() {
+    func transactionParsingFailsDueToMissingDate() {
         let transactionText = """
         T500
         CX
@@ -34,9 +34,7 @@ final class QIFTests: XCTestCase {
         ^
         """
         
-        XCTAssertThrowsError(try QIFTransaction(transactionText), "initialization should fail when date is missing") { error in
-            XCTAssertEqual(error as? TransactionParsingError, TransactionParsingError.incorrectFormat)
-        }
+        XCTAssertThrowsError(try QIFTransaction(transactionText))
     }
     
     func parseType() throws {
