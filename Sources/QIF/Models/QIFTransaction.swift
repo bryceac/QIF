@@ -86,6 +86,32 @@ extension QIFTransaction {
         } else {
             checkNumber = nil
         }
+        
+        guard let vendor = transactionValues["vendor"] else {
+            throw QIFTransactionParsingError.noVendor
+        }
+        
+        self.vendor = vendor
+        
+        if let address = transactionValues["address"] {
+            self.address = address
+        } else {
+            address = vendor
+        }
+        
+        category = transactionValues["category"]
+        
+        if let memo = transactionValues["memo"] {
+            self.memo = memo
+        } else {
+            memo = ""
+        }
+        
+        if let status = transactionValues["status"] {
+            self.status = TransactionStatus(rawValue: status)
+        } else {
+            status = nil
+        }
     }
 }
 
