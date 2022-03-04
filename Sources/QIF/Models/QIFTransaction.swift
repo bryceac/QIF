@@ -36,7 +36,39 @@ public struct QIFTransaction {
 
 extension QIFTransaction {
     init(_ text: String) throws {
+        let transactionValues: [String:String] = [:]
         
+        let lines = text.components(separatedBy: .newlines)
+        
+        for line in lines {
+            switch line {
+                case let l where l.starts(with: "D"):
+                let date = String(l.dropFirst())
+                    print(date)
+                case let l where l.starts(with: "T") || l.starts(with: "U"):
+                    let amount = String(l.dropFirst())
+                    print(amount)
+                case let l where l.starts(with: "N"):
+                    let checkNumber = String(l.dropFirst())
+                    print(checkNumber)
+                case let l where l.starts(with: "P"):
+                    let vendor = String(l.dropFirst())
+                    print(vendor)
+                case let l where l.starts(with: "A"):
+                    let address = String(l.dropFirst())
+                    print(address)
+                case let l where l.starts(with: "L"):
+                    let category = String(l.dropFirst())
+                    print(category)
+                case let l where l.starts(with: "M"):
+                    let memo = String(l.dropFirst())
+                    print(memo)
+                case let l where l.starts(with: "C"):
+                    let status = String(l.dropFirst())
+                    print(status)
+                default: ()
+            }
+        }
     }
 }
 
