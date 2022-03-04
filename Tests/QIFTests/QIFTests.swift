@@ -53,6 +53,37 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(testString))
     }
     
+    func transactionParsingFailsWhenAmountIsMissing() {
+        let transactionText = """
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFTransaction(transactionText))
+    }
+    
+    func transactionParsingFailsWhenAmountIsNotNumerical() {
+        let transactionText = """
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFTransaction(transactionText))
+    }
+    
     func parseType() throws {
         let typeText = "!Type:Bank"
         
