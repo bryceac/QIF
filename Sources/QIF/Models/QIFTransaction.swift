@@ -71,11 +71,17 @@ extension QIFTransaction {
         }
         
         guard let date = transactionValues["date"], let transactionDate = QIFTransaction.QIF_DATE_FORMATTER.date(from: date) else {
-            .none ~= transactionValues["date"] ? QIFTransactionParsingError.noDateFound : QIFTransactionParsingError.wrongDateFormat
+            throw .none ~= transactionValues["date"] ? QIFTransactionParsingError.noDateFound : QIFTransactionParsingError.wrongDateFormat
         }
         
         guard let amount = transactionValues["amount"], let transactionAmount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amount) else {
-            
+            throw .none ~= transactionValues["amount"] ? QIFTransactionParsingError.fieldNotFound(field: "amount") : QIFTransactionParsingError.valueNotNumerical(value: transactionValues["amount"]!, field: "amount")
+        }
+        
+        guard .none ~= transactionValues["checkNumber"] || Int(transactionValues["checkNumber"]!) else {
+            if let checkNumber = transactionValues["checkNumber"] {
+                throw QIFTransactionParsingError.valueNotNumerical(value: checkNumber, field: "check number")
+            }
         }
     }
 }
