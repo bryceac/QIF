@@ -91,3 +91,14 @@ tonyhawk2100@gmail.com
 While I am not too familiar with QIF or even all variants of it, 
 I will try my best to help out, but I have my limits, 
 since information is quite limited.
+
+===Other===
+
+This library has been tested on macOS 12 with a QIF file 
+generated from Gnu Cash using <a href="https://gnucashtoqif.us/">GnuCashToQIF</a> 
+version 1.7 into a Quicken 2003 compatible QIF file, 
+though QIF files generated from this library 
+might not be compatible with that version of Quicken.
+
+It <strong>should</strong> work on other platforms without modifications, 
+but I am not ertain of that.
