@@ -40,7 +40,7 @@ extension QIFTransaction {
     /**
      initialize transaction from string input.
      - Returns: QIFTransaction value
-     - Throws: QIFTransactionParsingError if date is not in the correct format or does not exist, no vendor or payee is specified, or no amount is specified.
+     - Throws: QIFTransactionParsingError if date is not in the correct format or does not exist, no vendor or payee is specified, or either no amount is specified or the amount specified is not a numerical value.
      */
     public init(_ text: String) throws {
         var transactionValues: [String:String] = [:]

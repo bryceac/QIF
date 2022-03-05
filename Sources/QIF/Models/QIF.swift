@@ -15,9 +15,15 @@ public struct QIF {
 }
 
 extension QIF {
+    /**
+     initialize QIF Value from string.
+     - Returns: QIF value made from the string.
+     - Throws: QIFTypeParsingError if type cannot be determined.
+     */
     public init(_ text: String) throws {
         let type = try QIFType(text)
         
+        /* separate out records in string based upon the details mentionedat the following URL: https://stuff.mit.edu/afs/sipb/project/gnucash/1.6.4/arch/sun4x_58/share/gnome/help/gnucash/C/intro.html */
         let transactionBlocks = text.components(separatedBy: "^")
         
         var transactions: [QIFTransaction] = []
@@ -58,7 +64,7 @@ extension QIF: Equatable {
 extension QIF {
     /**
      load transaction from specified QIF file.
-     - Returns: Optional QIF model that will be nil if a !Type section cannot be found or text cannot decoded.
+     - Returns: QIF model.
      */
     public static func load(from file: URL) throws -> QIF {
         let fileData = try Data(contentsOf: file)
@@ -71,6 +77,9 @@ extension QIF {
         return qif
     }
     
+    /**
+     save QIF data to a specified location.
+     */
     public func save(to path: URL) throws {
         try "\(self)".write(to: path, atomically: true, encoding: .utf8)
     }
