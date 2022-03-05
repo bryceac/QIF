@@ -18,7 +18,9 @@ extension QIFType {
         }
         
         guard let type = sectionMatches.compactMap({ $0.last }).first(where: { !(.none ~= QIFType(rawValue: $0)) }) else {
-            
+            throw QIFTypeParsingError.noValidSections
         }
+        
+        self = type
     }
 }
