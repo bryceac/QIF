@@ -24,7 +24,7 @@ extension QIF {
         /* separate out records in string based upon the details mentionedat the following URL: https://stuff.mit.edu/afs/sipb/project/gnucash/1.6.4/arch/sun4x_58/share/gnome/help/gnucash/C/intro.html */
         let transactionBlocks = text.components(separatedBy: "^")
         
-        sections: [QIFType: QIFSection] = [:]
+        var sections: [String: QIFSection] = [:]
         
         var latestSection: QIFSection? = nil
         
@@ -32,13 +32,11 @@ extension QIF {
             if let section = try? QIFSection(block), !sections.keys.contains(section.type.rawValue) {
                 sections[section.type.rawValue] = section
                 latestSection = sections[section.type.rawValue]
-            } else if let transaction = try? QIFTransaction(block), lastestSection = lastestSection {
+            } else if let transaction = try? QIFTransaction(block), let lastestSection = latestSection {
                 sections[latestSection?.type.rawValue]?.transactions.insert(transaction)
             }
         }
-        
-        self.type = type
-        self.transactions = Set(transactions)
+        self.sections = sections
     }
 }
 

@@ -140,12 +140,12 @@ final class QIFTests: XCTestCase {
 
         let velociraptorEntertainment = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Velociraptor Entertainment", address: "Velociraptor Entertainment", amount: 50000, category: nil, memo: "Pay Day", status: nil)
         
-        let type = QIFType.bank
-        
-        let qif = QIF(type: type, transactions: [
-            samHill,
-            fakeStreetElectronics,
-            velociraptorEntertainment
+        let qif = QIF(sections: [
+            "Bank": QIFSection(type: .bank, transactions: Set([
+                samHill,
+                fakeStreetElectronics,
+                velociraptorEntertainment
+            ]))
         ])
         
         let text = """
@@ -188,12 +188,12 @@ final class QIFTests: XCTestCase {
 
         let velociraptorEntertainment = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Velociraptor Entertainment", address: "Velociraptor Entertainment", amount: 50000, category: nil, memo: "Pay Day", status: nil)
         
-        let type = QIFType.bank
-        
-        let qif = QIF(type: type, transactions: [
-            samHill,
-            fakeStreetElectronics,
-            velociraptorEntertainment
+        let qif = QIF(sections: [
+            "Bank": QIFSection(type: .bank, transactions: Set([
+                samHill,
+                fakeStreetElectronics,
+                velociraptorEntertainment
+            ]))
         ])
         
         let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -210,13 +210,13 @@ final class QIFTests: XCTestCase {
 
         let velociraptorEntertainment = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Velociraptor Entertainment", address: "Velociraptor Entertainment", amount: 50000, category: nil, memo: "Pay Day", status: nil)
         
-        let type = QIFType.bank
-        
-        let qif = QIF(type: type, transactions: Set([
-            samHill,
-            fakeStreetElectronics,
-            velociraptorEntertainment
-        ]))
+        let qif = QIF(sections: [
+            "Bank": QIFSection(type: .bank, transactions: Set([
+                samHill,
+                fakeStreetElectronics,
+                velociraptorEntertainment
+            ]))
+        ])
         
         let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
