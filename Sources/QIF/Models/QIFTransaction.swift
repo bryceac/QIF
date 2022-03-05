@@ -148,7 +148,8 @@ extension QIFTransaction: CustomStringConvertible {
 
 extension QIFTransaction: Equatable {
    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        return lhs.checkNumber == rhs.checkNumber &&
+        return lhs.date == rhs.date &&
+        lhs.checkNumber == rhs.checkNumber &&
         lhs.vendor == rhs.vendor &&
         lhs.address == rhs.address &&
         lhs.amount == rhs.amount &&

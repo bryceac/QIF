@@ -37,6 +37,43 @@ the program this library is meant for does not, so it has been left out.
 If I see a need to support splits in the future, I might add it, 
 but they are not a priority.
 
+===Usage===
+
+To make use of this package, add it to the <strong>Package.swift</strong> file like this:
+
+<pre>
+dependencies: [
+    // Dependencies declare other packages that this package depends on.
+    // .package(url: /* package url */, from: "1.0.0"),
+    .package(url: "https://github.com/bryceac/QIF", branch: "main")
+]
+</pre>
+
+This adds the current state of the package to your project, 
+though using a tagged version is a better idea.
+
+After that, you just need to do something like this to read a QIF file;
+
+<pre>
+import Foundation
+
+let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+let TEST_FILE = DOCUMENTS_DIRECTORY.appendingPathComponent("test").appendingPathExtension("qif")
+
+if let qif = try? QIF.load(from: TEST_FILE) {
+    for transaction in qif.transactions {
+        print(transaction.amount)
+    }
+}
+</pre>
+
+That will display all the transaction amounts found in the QIF file
+
+Since I only needed single entry components for importing, 
+the transactions property is a set, 
+which is used to make sure there are no duplicates
+
 ===Contributing===
 
 If you would like to help make this project even better, 
