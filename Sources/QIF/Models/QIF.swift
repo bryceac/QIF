@@ -10,7 +10,7 @@ import Foundation
 /// QIF represents a QIF document
 public struct QIF {
     /// the type of transactions contain in the document
-    public var sections: [QIFType]
+    public var type: QIFType
     public var transactions: [QIFTransaction]
 }
 
