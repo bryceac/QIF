@@ -12,10 +12,6 @@
 
 ==Notes==
 
-This library is currently a <abbr title="work in progress">WIP</abbr>, 
-with integration testing yet be done, but 
-<strong>should</strong> work on any platform that can compile Swift.
-
 This project was created with the aim to be able to allow users 
 to import QIF files into 
 <a href="https://github.com/bryceac/BCheckbook">BCheckbook</a>, 
@@ -23,22 +19,23 @@ so that data can be migrated easily.
 
 ===Limits===
 
-Due to how I am processing the files, which utilizes Regex, 
-this library does not support multiple sections, 
-as it will only recognize the first <strong>!Type:</strong> instance.
+At this time, only one section is supported, which can only be a noninvestment type.
 
-It may be possible to support multiple sections with what I have, 
-but I am not certain that it will work, 
-nor do I intend to support multiple sections right now.
+This is by design, 
+as this library is mainly meant 
+for importing QIF files 
+into an application that supports only one account and 
+only deals with simple logging, 
+though it is possible to produce QIF files using this library too.
 
-Another limitation of this library is that 
-it supports only noninvestment transactions and does not support splits.
+Not only are only nonivestment sections supported, 
+but splits are not supported either.
 
-This is also by design, 
-as the Invoice section is not typical found in QIF files, 
-according to the 
-<a href="https://en.wikipedia.org/wiki/Quicken_Interchange_Format">QIF page</a> 
-on Wikipedia, and many fields become complicated when including other items.
+While the Quicken Interchange format supports splits, 
+the program this library is meant for does not, so it has been left out.
+
+If I see a need to support splits in the future, I might add it, 
+but they are not a priority.
 
 ===Contributing===
 
