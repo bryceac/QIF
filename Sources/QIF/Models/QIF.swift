@@ -32,7 +32,7 @@ extension QIF {
             if let section = try? QIFSection(block), !sections.keys.contains(section.type.rawValue) {
                 sections[section.type.rawValue] = section
                 latestSection = sections[section.type.rawValue]
-            } else if let transaction = try? QIFTransaction(block), let lastestSection = latestSection {
+            } else if let transaction = try? QIFTransaction(block), let latestSection = latestSection {
                 sections[latestSection.type.rawValue]?.transactions.insert(transaction)
             }
         }
@@ -54,8 +54,7 @@ extension QIF: CustomStringConvertible {
 
 extension QIF: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
-        return lhs.type == rhs.type &&
-        lhs.transactions == rhs.transactions
+        return lhs.sections == rhs.sections
     }
 }
 
