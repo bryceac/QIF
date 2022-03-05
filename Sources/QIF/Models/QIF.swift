@@ -19,8 +19,6 @@ extension QIF {
      - Throws: QIFTypeParsingError if type cannot be determined.
      */
     public init(_ text: String) throws {
-        let type = try QIFType(text)
-        
         /* separate out records in string based upon the details mentionedat the following URL: https://stuff.mit.edu/afs/sipb/project/gnucash/1.6.4/arch/sun4x_58/share/gnome/help/gnucash/C/intro.html */
         let transactionBlocks = text.components(separatedBy: "^")
         
