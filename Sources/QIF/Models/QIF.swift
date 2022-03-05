@@ -32,6 +32,10 @@ extension QIF {
             if let section = try? QIFSection(block), !sections.keys.contains(section.type.rawValue) {
                 sections[section.type.rawValue] = section
                 latestSection = sections[section.type.rawValue]
+            } else if let section = try? QIFSection(block), sections.keys.contains(section.type.rawValue) {
+                
+                sections[section.type.rawValue]?.transactions = sections[section.type.rawValue]?.transactions.union(section.transactions)
+                latestSection = sections[section.type.rawValue]
             } else if let transaction = try? QIFTransaction(block), let latestSection = latestSection {
                 sections[latestSection.type.rawValue]?.transactions.insert(transaction)
             }
