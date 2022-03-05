@@ -36,7 +36,13 @@ public struct QIFTransaction {
 }
 
 extension QIFTransaction {
-    init(_ text: String) throws {
+    
+    /**
+     initialize transaction from string input.
+     - Returns: QIFTransaction value
+     - Throws: QIFTransactionParsingError if date is not in the correct format or does not exist, no vendor or payee is specified, or no amount is specified.
+     */
+    public init(_ text: String) throws {
         var transactionValues: [String:String] = [:]
         
         let lines = text.components(separatedBy: .newlines)
