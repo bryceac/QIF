@@ -189,11 +189,11 @@ final class QIFTests: XCTestCase {
         
         let type = QIFType.bank
         
-        let qif = QIF(type: type, transactions: [
+        let qif = QIF(type: type, transactions: Set([
             samHill,
             fakeStreetElectronics,
             velociraptorEntertainment
-        ])
+        ]))
         
         let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         
