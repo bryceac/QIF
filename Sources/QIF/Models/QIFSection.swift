@@ -25,6 +25,17 @@ extension QIFSection {
     }
 }
 
+extension QIFSection: CustomStringConvertible {
+    public var description: String {
+        var value = "!Type:\(type.rawValue)\r\n"
+        
+        for transaction in transactions {
+            value += "\(transaction)\r\n\r\n"
+        }
+        return value
+    }
+}
+
 extension QIFSection: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         return lhs.type == rhs.type && lhs.transactions == rhs.transactions

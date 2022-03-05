@@ -33,7 +33,7 @@ extension QIF {
                 sections[section.type.rawValue] = section
                 latestSection = sections[section.type.rawValue]
             } else if let transaction = try? QIFTransaction(block), let lastestSection = latestSection {
-                sections[latestSection?.type.rawValue]?.transactions.insert(transaction)
+                sections[latestSection.type.rawValue]?.transactions.insert(transaction)
             }
         }
         self.sections = sections
