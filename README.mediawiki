@@ -72,7 +72,7 @@ That will display all the transaction amounts found in the QIF file
 
 Since I only needed single entry components for importing, 
 the transactions property is a set, 
-which is used to make sure there are no duplicates
+which is used to make sure there are no duplicates.
 
 ===Contributing===
 
@@ -80,3 +80,14 @@ If you would like to help make this project even better,
 feel free to create a fork and issue a pull request. 
 All code submitted be licensed under the same as license as 
 this project.
+
+===Support===
+
+If you have troubles with this library, 
+contact me at the following address:
+
+tonyhawk2100@gmail.com
+
+While I am not too familiar with QIF or even all variants of it, 
+I will try my best to help out, but I have my limits, 
+since information is quite limited.
