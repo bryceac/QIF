@@ -19,14 +19,7 @@ so that data can be migrated easily.
 
 ===Limits===
 
-At this time, only one section is supported, which can only be a noninvestment type.
-
-This is by design, 
-as this library is mainly meant 
-for importing QIF files 
-into an application that supports only one account and 
-only deals with simple logging, 
-though it is possible to produce QIF files using this library too.
+At this time, only nonivestment sections are supported.
 
 Not only are only nonivestment sections supported, 
 but splits are not supported either.
