@@ -12,7 +12,12 @@ public enum QIFType: String, CaseIterable {
 }
 
 extension QIFType {
-    init(_ text: String) throws {
+    /**
+    initialize type of QIF file from string.
+    - Returns: QIFType enumeration value.
+    - Throws: QIFTypeParsingError if the format is not correct or section name is not valid.
+    */
+    public init(_ text: String) throws {
         guard let sectionMatches = text.matching(regexPattern: "!Type:(.*)") else {
             throw QIFTypeParsingError.incorrectFormat
         }
