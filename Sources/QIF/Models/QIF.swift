@@ -9,7 +9,7 @@ import Foundation
 
 /// QIF represents a QIF document
 public struct QIF {
-    public var sections: [QIFType: QIFSection]
+    public var sections: [String: QIFSection]
 }
 
 extension QIF {
@@ -24,12 +24,17 @@ extension QIF {
         /* separate out records in string based upon the details mentionedat the following URL: https://stuff.mit.edu/afs/sipb/project/gnucash/1.6.4/arch/sun4x_58/share/gnome/help/gnucash/C/intro.html */
         let transactionBlocks = text.components(separatedBy: "^")
         
-        var transactions: [QIFTransaction] = []
+        sections: [QIFType: QIFSection] = [:]
+        
+        var latestSection: QIFSection? = nil
         
         for block in transactionBlocks {
-            guard let transaction = try? QIFTransaction(block) else { continue }
-            
-            transactions.append(transaction)
+            if let section = try? QIFSection(block), !sections.keys.contains(section.type.rawValue) {
+                sections[section.type.rawValue] = section
+                latestSection = sections[section.type.rawValue]
+            } else if let transaction = try? QIFTransaction(block), lastestSection = lastestSection {
+                sections[latestSection?.type.rawValue]?.transactions.insert(transaction)
+            }
         }
         
         self.type = type
