@@ -11,7 +11,7 @@ import Foundation
 public struct QIF {
     /// the type of transactions contain in the document
     public var type: QIFType
-    public var transactions: [QIFTransaction]
+    public var transactions: Set<QIFTransaction>
 }
 
 extension QIF {
@@ -29,7 +29,7 @@ extension QIF {
         }
         
         self.type = type
-        self.transactions = transactions
+        self.transactions = Set(transactions)
     }
 }
 
