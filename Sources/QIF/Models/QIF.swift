@@ -9,9 +9,7 @@ import Foundation
 
 /// QIF represents a QIF document
 public struct QIF {
-    /// the type of transactions contain in the document
-    public var type: QIFType
-    public var transactions: Set<QIFTransaction>
+    public var sections: [QIFType: QIFSection]
 }
 
 extension QIF {

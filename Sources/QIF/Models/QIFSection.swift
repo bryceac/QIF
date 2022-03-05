@@ -17,8 +17,10 @@ extension QIFSection {
     init(_ text: String) throws {
         type = try QIFType(text)
         
-        let transaction = try QIFTransaction(text)
-        
-        transactions = Set([transaction])
+        if let transaction = try? QIFTransaction(text) {
+            transactions = Set([transaction])
+        } else {
+            transactions = Set<QIFTransaction>()
+        }
     }
 }
