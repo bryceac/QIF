@@ -151,3 +151,5 @@ extension QIFTransaction: Equatable {
         lhs.status == rhs.status
     }
 }
+
+extension QIFTransaction: Hashable {}
