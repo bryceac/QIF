@@ -25,7 +25,7 @@ extension QIFSection {
     }
 }
 
-estension QIFSection: Equatable {
+extension QIFSection: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         return lhs.type == rhs.type && lhs.transactions == rhs.transactions
     }
