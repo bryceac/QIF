@@ -46,12 +46,9 @@ extension QIF: CustomStringConvertible {
     the string representation of the QIF data. The string utilizes Windows newline sematics.
      */
     public var description: String {
-        var value = "!Type:\(type.rawValue)\r\n"
-        
-        for transaction in transactions {
-            value += "\(transaction)\r\n\r\n"
+        return sections.values.reduce(into: "") { string, section in
+            string += "\(section)"
         }
-        return value
     }
 }
 
