@@ -110,6 +110,29 @@ final class QIFTests: XCTestCase {
         }
     }
     
+    func parseQIFSection() throws {
+        let sampleSectionText = """
+        !Type:Bank
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        let expectedSection = QIFSection(type: .bank, transactions: Set([
+            QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hil Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
+        ]))
+        
+        let qifSection = try QIFSection(sampleSectionText)
+        
+        XCTAssertEqual(qifSection, expectedSection)
+    }
+    
     func parseQIFString() throws {
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
 

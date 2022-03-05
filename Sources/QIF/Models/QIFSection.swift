@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct QIFSection {
-    let type: QIFType
+public struct QIFSection {
+    public let type: QIFType
     
-    var transactions: Set<QIFTransaction>
+    public var transactions: Set<QIFTransaction>
 }
 
 extension QIFSection {
@@ -22,5 +22,11 @@ extension QIFSection {
         } else {
             transactions = Set<QIFTransaction>()
         }
+    }
+}
+
+estension QIFSection: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        return lhs.type == rhs.type && lhs.transactions == rhs.transactions
     }
 }
