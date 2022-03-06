@@ -84,32 +84,6 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(transactionText))
     }
     
-    func parseType() throws {
-        let typeText = "!Type:Bank"
-        
-        let bank = QIFType.bank
-        
-        let type = try QIFType(typeText)
-        
-        XCTAssertEqual(type, bank)
-    }
-    
-    func typeParseFailsDueToFormat() throws {
-        let typeText = "Bank"
-        
-        XCTAssertThrowsError(try QIFType(typeText), "initialization should fail if format is not correct") { error in
-            XCTAssertEqual(error as? QIFTypeParsingError, QIFTypeParsingError.incorrectFormat)
-        }
-    }
-    
-    func typeParsingFailsDueToInvalidType() {
-        let typeText = "Business"
-        
-        XCTAssertThrowsError(try QIFType(typeText), "initialization should fail if type is not found in enumeration") { error in
-            XCTAssertEqual(error as? QIFTypeParsingError, QIFTypeParsingError.invalidType)
-        }
-    }
-    
     func parseQIFSection() throws {
         let sampleSectionText = """
         !Type:Bank
@@ -131,6 +105,56 @@ final class QIFTests: XCTestCase {
         let qifSection = try QIFSection(sampleSectionText)
         
         XCTAssertEqual(qifSection, expectedSection)
+    }
+    
+    func parsingQIFSectionFailsWhenTypeIsMissing() {
+        let sampleSectionText = """
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFSection(sampleSectionText))
+    }
+    
+    func parsingQIFSectionFailsWithoutProperFormatting() {
+        let sampleSectionText = """
+        Bank
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFSection(sampleSectionText))
+    }
+    
+    func parsingQIFSectionFailsWhenTypeIsInvalid() {
+        let sampleSectionText = """
+        !Type:hero
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertThrowsError(try QIFSection(sampleSectionText))
     }
     
     func parseQIFString() throws {
