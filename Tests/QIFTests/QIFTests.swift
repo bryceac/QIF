@@ -107,6 +107,24 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(qifSection, expectedSection)
     }
     
+    func parseQIFSectionWithWhitespace() throws {
+        let sampleSectionText = """
+        
+        !Type:Bank
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        ^
+        """
+        
+        XCTAssertNoThrow(try QIFSection(sampleSectionText))
+    }
+    
     func parsingQIFSectionFailsWhenTypeIsMissing() {
         let sampleSectionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
