@@ -33,6 +33,17 @@ public struct QIFTransaction {
         
         return formatter
     }()
+    
+    public init(date: Date, checkNumber: Int? = nil, vendor: String, address: String, amount: Double, category: String? = nil, memo: String, status: TransactionStatus? = nil) {
+        self.date = date
+        self.checkNumber = checkNumber
+        self.vendor = vendor
+        self.address = address
+        self.amount = amount
+        self.category = category
+        self.memo = memo
+        self.status = status
+    }
 }
 
 extension QIFTransaction {

@@ -11,6 +11,11 @@ public struct QIFSection {
     public let type: QIFType
     
     public var transactions: Set<QIFTransaction>
+    
+    public init(type: QIFType, transactions: Set<QIFTransaction>) {
+        self.type = type
+        self.transactions = transactions
+    }
 }
 
 extension QIFSection {

@@ -10,6 +10,10 @@ import Foundation
 /// QIF represents a QIF document
 public struct QIF {
     public var sections: [String: QIFSection]
+    
+    public init(sections: [String : QIFSection]) {
+        self.sections = sections
+    }
 }
 
 extension QIF {
