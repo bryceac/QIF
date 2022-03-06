@@ -20,7 +20,17 @@ public struct QIFSection {
 
 extension QIFSection {
     init(_ text: String) throws {
-        type = try QIFType(text)
+        let lines = text.components(separatedBy: .newlines)
+        
+        guard lines.first!.starts(with: "!Type:") else {
+            throw QIFTypeParsingError.incorrectFormat
+        }
+        
+        guard let sectionType = QIFType(rawValue: lines.first!.components(separatedBy: ":")[1]) else {
+            throw QIFTypeParsingError.invalidType
+        }
+        
+        type = sectionType
         
         if let transaction = try? QIFTransaction(text) {
             transactions = Set([transaction])
