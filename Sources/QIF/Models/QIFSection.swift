@@ -20,7 +20,7 @@ public struct QIFSection {
 
 extension QIFSection {
     init(_ text: String) throws {
-        let lines = text.components(separatedBy: .newlines)
+        let lines = text.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: .newlines)
         
         guard lines.first!.starts(with: "!Type:") else {
             throw QIFTypeParsingError.incorrectFormat
