@@ -33,7 +33,7 @@ extension QIFSection: CustomStringConvertible {
             value += "\(transaction)\n\n"
         }
         
-        return value.replacingOccurrences(of: "\n", with: "\r\n")
+        return value
     }
 }
 
