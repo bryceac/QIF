@@ -27,12 +27,13 @@ extension QIFSection {
 
 extension QIFSection: CustomStringConvertible {
     public var description: String {
-        var value = "!Type:\(type.rawValue)\r\n"
+        var value = "!Type:\(type.rawValue)\n"
         
         for transaction in transactions {
-            value += "\(transaction)\r\n\r\n"
+            value += "\(transaction)\n\n"
         }
-        return value
+        
+        return value.replacingOccurrences(of: "\n", with: "\r\n")
     }
 }
 
