@@ -49,6 +49,7 @@ After that, you just need to do something like this to read a QIF file;
 
 <pre>
 import Foundation
+import QIF
 
 let DOCUMENTS_DIRECTORY = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
