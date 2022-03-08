@@ -107,16 +107,18 @@ extension QIFTransaction {
                     if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
                     splits[lastSplitIndex].amount = amount.doubleValue
                     } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                        var split = QIFSplit(memo: memo)
+                        var split = QIFSplit(amount: amount)
                         splits.append(split)
                     }
                 case let l where l.starts(with: "%"):
-                    let amountString = String(l.dropFirst())
+                    let percentageValue = String(l.dropFirst())
                 
-                    if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                            splits[lastSplitIndex].amount = amount.doubleValue
-                    } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                            var split = QIFSplit(memo: memo)
+                    if let lastSplitIndex = splits.indices.last, let amountString = transactionValues["amount"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString), let percentage = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: percentageValue) {
+                            let percentageDecimal = percentage.doubleValue/100
+                            splits[lastSplitIndex].amount = amount.doubleValue * percentageDecimal
+                    } else if let amountString = transactionValues["amount"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString), let percentage = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: percentageValue) {
+                            let decimalPercentage = percentage.doubleValue/100
+                            var split = QIFSplit(amount: amount.doubleValue * decimalPercentage)
                             splits.append(split)
                     }
                 default: ()
