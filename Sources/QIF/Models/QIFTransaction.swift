@@ -208,6 +208,8 @@ extension QIFTransaction: CustomStringConvertible {
         L\(category ?? "")
         ^
         """
+        
+        return transactionString
     }
 }
 
