@@ -90,7 +90,7 @@ extension QIFTransaction {
                     transactionValues["status"] = status
                 case let l where l.starts(with: "S"):
                     let category = String(l.dropFirst())
-                    var split = QIFSplit(category: !category.isEmpty ? category : transactionValues["category"])
+                    let split = QIFSplit(category: !category.isEmpty ? category : transactionValues["category"])
                     splits.append(split)
                 case let l where l.starts(with: "E"):
                     let memo = String(l.dropFirst())
@@ -98,7 +98,7 @@ extension QIFTransaction {
                     if let lastSplitIndex = splits.indices.last {
                         splits[lastSplitIndex].memo = memo
                     } else {
-                        var split = QIFSplit(memo: memo)
+                        let split = QIFSplit(memo: memo)
                         splits.append(split)
                     }
                 case let l where l.starts(with: "$"):
@@ -107,7 +107,7 @@ extension QIFTransaction {
                     if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
                     splits[lastSplitIndex].amount = amount.doubleValue
                     } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                        var split = QIFSplit(amount: amount.doubleValue)
+                        let split = QIFSplit(amount: amount.doubleValue)
                         splits.append(split)
                     }
                 case let l where l.starts(with: "%"):
@@ -118,7 +118,7 @@ extension QIFTransaction {
                             splits[lastSplitIndex].amount = amount.doubleValue * percentageDecimal
                     } else if let amountString = transactionValues["amount"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString), let percentage = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: percentageValue) {
                             let decimalPercentage = percentage.doubleValue/100
-                            var split = QIFSplit(amount: amount.doubleValue * decimalPercentage)
+                            let split = QIFSplit(amount: amount.doubleValue * decimalPercentage)
                             splits.append(split)
                     }
                 default: ()
