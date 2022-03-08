@@ -60,6 +60,8 @@ extension QIFTransaction {
         
         let lines = text.components(separatedBy: .newlines)
         
+        var splits: [QIFSplit] = []
+        
         for line in lines {
             switch line {
                 case let l where l.starts(with: "D"):
@@ -86,6 +88,37 @@ extension QIFTransaction {
                 case let l where l.starts(with: "C"):
                     let status = String(l.dropFirst())
                     transactionValues["status"] = status
+                case let l where l.starts(with: "S"):
+                    let category = String(l.dropFirst())
+                    var split = QIFSplit(category: category)
+                splits.append(splits)
+                case let l where l.starts(with: "E"):
+                    let memo = String(l.dropFirst())
+                
+                    if let lastSplitIndex = splits.indices.last {
+                        splits[lastSplitIndex].memo = memo
+                    } else {
+                        var split = QIFSplit(memo: memo)
+                        splits.append(split)
+                    }
+                case let l where l.starts(with: "$"):
+                    let amountString = String(l.dropFirst())
+                    
+                    if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
+                    splits[lastSplitIndex].amount = amount.doubleValue
+                    } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
+                        var split = QIFSplit(memo: memo)
+                        splits.append(split)
+                    }
+                case let l where l.starts(with: "%"):
+                    let amountString = String(l.dropFirst())
+                
+                    if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
+                            splits[lastSplitIndex].amount = amount.doubleValue
+                    } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
+                            var split = QIFSplit(memo: memo)
+                            splits.append(split)
+                    }
                 default: ()
             }
         }
