@@ -17,6 +17,7 @@ public struct QIFTransaction {
     public var category: String?
     public var memo: String
     public var status: TransactionStatus?
+    public var splits: [QIFSplit] = []
     
     public static let QIF_DATE_FORMATTER: DateFormatter = {
         let formatter = DateFormatter()
@@ -34,7 +35,7 @@ public struct QIFTransaction {
         return formatter
     }()
     
-    public init(date: Date, checkNumber: Int? = nil, vendor: String, address: String, amount: Double, category: String? = nil, memo: String, status: TransactionStatus? = nil) {
+    public init(date: Date, checkNumber: Int? = nil, vendor: String, address: String, amount: Double, category: String? = nil, memo: String, status: TransactionStatus? = nil, splits: [QIFSplit] = []) {
         self.date = date
         self.checkNumber = checkNumber
         self.vendor = vendor
@@ -43,6 +44,7 @@ public struct QIFTransaction {
         self.category = category
         self.memo = memo
         self.status = status
+        self.splits = splits
     }
 }
 
