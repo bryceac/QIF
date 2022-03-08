@@ -14,7 +14,7 @@ public struct QIFSplit {
 }
 
 extension QIFSplit: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         return """
         S\(category ?? "")
         E\(memo)
@@ -26,7 +26,7 @@ extension QIFSplit: CustomStringConvertible {
 extension QIFSplit: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         return lhs.category == rhs.category &&
-        lhs.memo == rhs.memo
+        lhs.memo == rhs.memo &&
         lhs.amount == rhs.amount
     }
 }
