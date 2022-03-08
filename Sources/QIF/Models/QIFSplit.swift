@@ -12,3 +12,23 @@ public struct QIFSplit {
     public var memo: String
     public var amount: Double
 }
+
+extension QIFSplit: CustomStringConvertible {
+    var description: String {
+        return """
+        S\(category ?? "")
+        E\(memo)
+        $\(amount)
+        """
+    }
+}
+
+extension QIFSplit: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        return lhs.category == rhs.category &&
+        lhs.memo == rhs.memo
+        lhs.amount == rhs.amount
+    }
+}
+
+extension QIFSplit: Hashable {}
