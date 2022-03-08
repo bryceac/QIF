@@ -9,7 +9,7 @@ import Foundation
 
 public struct QIFSplit {
     public var category: String?
-    public var memo: String
+    public var memo: String = ""
     public var amount: Double
 }
 
