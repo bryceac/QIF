@@ -47,6 +47,31 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction, samHill)
     }
     
+    func parseTransactionWithPercentageSplit() throws {
+        let transactionText = """
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500
+        CX
+        N1260
+        PSam Hill Credit Union
+        MOpen Account
+        ASam Hill Credit Union
+        LOpening Balance
+        SOpening Balance
+        EBonus for new Account
+        %10
+        ^
+        """
+        
+        let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared, splits: [
+            QIFSplit(category: "Opening Balance", memo: "Bonus for new Account", amount: 50)
+        ])
+        
+        let parsedTransaction = try QIFTransaction(transactionText)
+            
+        XCTAssertEqual(parsedTransaction, samHill)
+    }
+    
     func transactionParsingFailsDueToMissingDate() {
         let transactionText = """
         T500
