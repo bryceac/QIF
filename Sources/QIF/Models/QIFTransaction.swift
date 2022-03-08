@@ -167,6 +167,8 @@ extension QIFTransaction {
         } else {
             status = nil
         }
+        
+        self.splits = splits
     }
 }
 
