@@ -90,8 +90,8 @@ extension QIFTransaction {
                     transactionValues["status"] = status
                 case let l where l.starts(with: "S"):
                     let category = String(l.dropFirst())
-                var split = QIFSplit(category: !category.isEmpty ? category : transactionValues["category"])
-                    splits.append(splits)
+                    var split = QIFSplit(category: !category.isEmpty ? category : transactionValues["category"])
+                    splits.append(split)
                 case let l where l.starts(with: "E"):
                     let memo = String(l.dropFirst())
                 
@@ -107,7 +107,7 @@ extension QIFTransaction {
                     if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
                     splits[lastSplitIndex].amount = amount.doubleValue
                     } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                        var split = QIFSplit(amount: amount)
+                        var split = QIFSplit(amount: amount.doubleValue)
                         splits.append(split)
                     }
                 case let l where l.starts(with: "%"):
@@ -211,7 +211,7 @@ extension QIFTransaction: Equatable {
         lhs.category == rhs.category &&
         lhs.memo == rhs.memo &&
         lhs.status == rhs.status &&
-        lhs.splis == rhs.splits
+        lhs.splits == rhs.splits
     }
 }
 
