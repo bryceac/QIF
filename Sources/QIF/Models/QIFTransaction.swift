@@ -205,7 +205,8 @@ extension QIFTransaction: Equatable {
         lhs.amount == rhs.amount &&
         lhs.category == rhs.category &&
         lhs.memo == rhs.memo &&
-        lhs.status == rhs.status
+        lhs.status == rhs.status &&
+       lhs.splis == rhs.splits
     }
 }
 
