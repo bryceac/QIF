@@ -182,6 +182,10 @@ extension QIFTransaction: CustomStringConvertible {
         default: ()
         }
         
+        let transactionSplits = splits.reduce(into: "") { string, split in
+            string += "\(split)\n"
+        }
+        
         return """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: date))
         T\(amount)
@@ -191,6 +195,7 @@ extension QIFTransaction: CustomStringConvertible {
         M\(memo)
         A\(address)
         L\(category ?? "")
+        \(transactionSplits)
         ^
         """
     }
