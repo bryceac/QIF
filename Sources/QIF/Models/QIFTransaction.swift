@@ -91,7 +91,7 @@ extension QIFTransaction {
                 case let l where l.starts(with: "S"):
                     let category = String(l.dropFirst())
                 var split = QIFSplit(category: !category.isEmpty ? category : transactionValues["category"])
-                splits.append(splits)
+                    splits.append(splits)
                 case let l where l.starts(with: "E"):
                     let memo = String(l.dropFirst())
                 

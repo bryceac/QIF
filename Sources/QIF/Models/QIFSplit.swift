@@ -10,7 +10,7 @@ import Foundation
 public struct QIFSplit {
     public var category: String?
     public var memo: String = ""
-    public var amount: Double
+    public var amount: Double = 0
 }
 
 extension QIFSplit: CustomStringConvertible {
