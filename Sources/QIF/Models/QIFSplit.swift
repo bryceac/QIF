@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// represents a split in a transaction in a QIF file.
 public struct QIFSplit {
     public var category: String?
     public var memo: String = ""

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// represents a section, which beging with "!Type:", in a QIF file.
 public struct QIFSection {
     public let type: QIFType
     
