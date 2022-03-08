@@ -11,6 +11,12 @@ public struct QIFSplit {
     public var category: String?
     public var memo: String = ""
     public var amount: Double = 0
+    
+    public init(category: String? = nil, memo: String = "", amount: Double = 0) {
+        self.category = category
+        self.memo = memo
+        self.amount = amount
+    }
 }
 
 extension QIFSplit: CustomStringConvertible {
