@@ -50,19 +50,19 @@ final class QIFTests: XCTestCase {
     func test_parseTransactionWithMultipleSplits() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
-        T500
+        T500.0
         CX
         N1260
         PSam Hill Credit Union
         MOpen Account
         ASam Hill Credit Union
         LOpening Balance
-        SOpen Balance
+        SOpening Balance
         EInitial Deposit
-        $450
+        $450.0
         SOpening Balance
         EBonus for new Account
-        $50
+        $50.0
         ^
         """
         
@@ -73,7 +73,7 @@ final class QIFTests: XCTestCase {
         
         let parsedTransaction = try QIFTransaction(transactionText)
             
-        XCTAssertEqual("\(parsedTransaction)", "\(samHill)")
+        XCTAssertEqual("\(parsedTransaction)","\(samHill)")
     }
     
     func test_parseTransactionWithSplitThatHasNoExplicitCategory() throws {
