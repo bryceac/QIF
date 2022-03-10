@@ -144,7 +144,7 @@ final class QIFTests: XCTestCase {
     
     func test_transactionParsingFailsDueToWrongDateFormat() {
         let testString = """
-        D03/04/20
+        D03/04'2020
         T500
         CX
         N1260
@@ -198,7 +198,7 @@ final class QIFTests: XCTestCase {
         N1260
         PSam Hill Credit Union
         MOpen Account
-        ASam Hill Credit Union
+        ASam Hil Credit Union
         LOpening Balance
         ^
         """
@@ -209,7 +209,7 @@ final class QIFTests: XCTestCase {
         
         let qifSection = try QIFSection(sampleSectionText)
         
-        XCTAssertEqual(qifSection, expectedSection)
+        XCTAssertEqual("\(qifSection)", "\(expectedSection)")
     }
     
     func test_parseQIFSectionWithWhitespace() throws {
@@ -298,7 +298,17 @@ final class QIFTests: XCTestCase {
         let text = """
         !Type:Bank
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
-        T500
+        T50000.0
+        C
+        N0
+        PVelociraptor Entertainment
+        MPay Day
+        AVelociraptor Entertainment
+        L
+        ^
+
+        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
+        T500.0
         CX
         N1260
         PSam Hill Credit Union
@@ -306,20 +316,15 @@ final class QIFTests: XCTestCase {
         ASam Hill Credit Union
         LOpening Balance
         ^
-        
+
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
-        T-200
+        T-200.0
+        C
+        N0
         PFake Street Electronics
         MHead set
         AFake Street Electronics
         LGifts
-        ^
-        
-        D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
-        T50000
-        PVelociraptor Entertainment
-        MPay Day
-        AVelociraptor Entertainment
         ^
         """
         
