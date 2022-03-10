@@ -104,7 +104,8 @@ final class QIFTests: XCTestCase {
     func test_parseTransactionWithPercentageSplit() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
-        T500
+        D03/10/2022
+        T500.0
         CX
         N1260
         PSam Hill Credit Union
@@ -123,7 +124,7 @@ final class QIFTests: XCTestCase {
         
         let parsedTransaction = try QIFTransaction(transactionText)
             
-        XCTAssertEqual(parsedTransaction, samHill)
+        XCTAssertEqual("\(parsedTransaction)", "\(samHill)")
     }
     
     func test_transactionParsingFailsDueToMissingDate() {
