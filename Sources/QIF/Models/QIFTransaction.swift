@@ -183,7 +183,8 @@ extension QIFTransaction: CustomStringConvertible {
         }
         
         let transactionSplits = splits.reduce(into: "") { string, split in
-            string += "\(split)\n"
+            
+            string += split != splits.last! ? "\(split)\n" : "\(split)"
         }
         
         let transactionString = !splits.isEmpty ? """

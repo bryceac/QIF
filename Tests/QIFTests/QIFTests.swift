@@ -19,7 +19,7 @@ final class QIFTests: XCTestCase {
         
         let parsedTransaction = try QIFTransaction(transactionText)
             
-        XCTAssertEqual(parsedTransaction, samHill)
+        XCTAssertEqual("\(parsedTransaction)", "\(samHill)")
     }
     
     func test_parseTransactionWithExplicitSplit() throws {
@@ -44,7 +44,7 @@ final class QIFTests: XCTestCase {
         
         let parsedTransaction = try QIFTransaction(transactionText)
             
-        XCTAssertEqual(parsedTransaction, samHill)
+        XCTAssertEqual("\(parsedTransaction)", "\(samHill)")
     }
     
     func test_parseTransactionWithMultipleSplits() throws {
@@ -73,7 +73,7 @@ final class QIFTests: XCTestCase {
         
         let parsedTransaction = try QIFTransaction(transactionText)
             
-        XCTAssertEqual(parsedTransaction, samHill)
+        XCTAssertEqual("\(parsedTransaction)", "\(samHill)")
     }
     
     func test_parseTransactionWithSplitThatHasNoExplicitCategory() throws {
