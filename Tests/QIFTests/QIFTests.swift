@@ -2,7 +2,7 @@ import XCTest
 @testable import QIF
 
 final class QIFTests: XCTestCase {
-    func parseTransaction() throws {
+    func test_parseTransaction() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -22,7 +22,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction, samHill)
     }
     
-    func parseTransactionWithExplicitSplit() throws {
+    func test_parseTransactionWithExplicitSplit() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -47,7 +47,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction, samHill)
     }
     
-    func parseTransactionWithMultipleSplits() throws {
+    func test_parseTransactionWithMultipleSplits() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -76,7 +76,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction, samHill)
     }
     
-    func parseTransactionWithSplitThatHasNoExplicitCategory() throws {
+    func test_parseTransactionWithSplitThatHasNoExplicitCategory() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -101,7 +101,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction.splits[0].category, samHill.category)
     }
     
-    func parseTransactionWithPercentageSplit() throws {
+    func test_parseTransactionWithPercentageSplit() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -126,7 +126,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(parsedTransaction, samHill)
     }
     
-    func transactionParsingFailsDueToMissingDate() {
+    func test_transactionParsingFailsDueToMissingDate() {
         let transactionText = """
         T500
         CX
@@ -141,7 +141,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(transactionText))
     }
     
-    func transactionParsingFailsDueToWrongDateFormat() {
+    func test_transactionParsingFailsDueToWrongDateFormat() {
         let testString = """
         D03/04/20
         T500
@@ -157,7 +157,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(testString))
     }
     
-    func transactionParsingFailsWhenAmountIsMissing() {
+    func test_transactionParsingFailsWhenAmountIsMissing() {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         CX
@@ -172,7 +172,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(transactionText))
     }
     
-    func transactionParsingFailsWhenAmountIsNotNumerical() {
+    func test_transactionParsingFailsWhenAmountIsNotNumerical() {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T
@@ -188,7 +188,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFTransaction(transactionText))
     }
     
-    func parseQIFSection() throws {
+    func test_parseQIFSection() throws {
         let sampleSectionText = """
         !Type:Bank
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
@@ -211,7 +211,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(qifSection, expectedSection)
     }
     
-    func parseQIFSectionWithWhitespace() throws {
+    func test_parseQIFSectionWithWhitespace() throws {
         let sampleSectionText = """
         
         !Type:Bank
@@ -229,7 +229,7 @@ final class QIFTests: XCTestCase {
         XCTAssertNoThrow(try QIFSection(sampleSectionText))
     }
     
-    func parsingQIFSectionFailsWhenTypeIsMissing() {
+    func test_parsingQIFSectionFailsWhenTypeIsMissing() {
         let sampleSectionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
         T500
@@ -245,7 +245,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFSection(sampleSectionText))
     }
     
-    func parsingQIFSectionFailsWithoutProperFormatting() {
+    func test_parsingQIFSectionFailsWithoutProperFormatting() {
         let sampleSectionText = """
         Bank
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
@@ -262,7 +262,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFSection(sampleSectionText))
     }
     
-    func parsingQIFSectionFailsWhenTypeIsInvalid() {
+    func test_parsingQIFSectionFailsWhenTypeIsInvalid() {
         let sampleSectionText = """
         !Type:hero
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
@@ -279,7 +279,7 @@ final class QIFTests: XCTestCase {
         XCTAssertThrowsError(try QIFSection(sampleSectionText))
     }
     
-    func parseQIFString() throws {
+    func test_parseQIFString() throws {
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
 
         let fakeStreetElectronics = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Fake Street Electronics", address: "Fake street Electronics", amount: -200, category: "Gifts", memo: "Head set", status: nil)
@@ -327,7 +327,7 @@ final class QIFTests: XCTestCase {
         XCTAssertEqual(qif, parsedQIF)
     }
     
-    func writeQIF() {
+    func test_writeQIF() {
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
 
         let fakeStreetElectronics = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Fake Street Electronics", address: "Fake street Electronics", amount: -200, category: "Gifts", memo: "Head set", status: nil)
@@ -349,7 +349,7 @@ final class QIFTests: XCTestCase {
         XCTAssertNoThrow(try qif.save(to: testFile))
     }
     
-    func readFile() throws {
+    func test_readFile() throws {
         let samHill = QIFTransaction(date: Date(), checkNumber: 1260, vendor: "Sam Hill Credit Union", address: "Sam Hill Credit Union", amount: 500, category: "Opening Balance", memo: "Open Account", status: .cleared)
 
         let fakeStreetElectronics = QIFTransaction(date: Date(), checkNumber: nil, vendor: "Fake Street Electronics", address: "Fake street Electronics", amount: -200, category: "Gifts", memo: "Head set", status: nil)
