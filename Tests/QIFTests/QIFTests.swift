@@ -330,7 +330,7 @@ final class QIFTests: XCTestCase {
         
         let parsedQIF = try QIF(text)
         
-        XCTAssertEqual(qif, parsedQIF)
+        XCTAssertEqual(parsedQIF.sections[QIFType.bank.rawValue]!.transactions.count, qif.sections[QIFType.bank.rawValue]!.transactions.count)
     }
     
     func test_writeQIF() {
@@ -376,6 +376,6 @@ final class QIFTests: XCTestCase {
         
         let parsedQIF = try QIF.load(from: testFile)
         
-        XCTAssertEqual(parsedQIF, qif)
+        XCTAssertEqual("\(parsedQIF)", "\(qif)")
     }
 }
