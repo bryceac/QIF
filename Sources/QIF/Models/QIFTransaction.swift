@@ -96,21 +96,21 @@ extension QIFTransaction {
                 case let l where l.starts(with: "$"):
                     let amountString = String(l.dropFirst())
                     
-                    if let lastSplitIndex = splits.indices.last, let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                    splits[lastSplitIndex].amount = amount.doubleValue
-                    } else if let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString) {
-                        let split = QIFSplit(amount: amount.doubleValue)
+                if let lastSplitIndex = splits.indices.last, let amount = Double(amountString) {
+                    splits[lastSplitIndex].amount = amount
+                    } else if let amount = Double(amountString) {
+                        let split = QIFSplit(amount: amount)
                         splits.append(split)
                     }
                 case let l where l.starts(with: "%"):
                     let percentageValue = String(l.dropFirst())
                 
-                    if let lastSplitIndex = splits.indices.last, let amountString = transactionValues["amount"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString), let percentage = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: percentageValue) {
-                            let percentageDecimal = percentage.doubleValue/100
-                            splits[lastSplitIndex].amount = amount.doubleValue * percentageDecimal
-                    } else if let amountString = transactionValues["amount"], let amount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amountString), let percentage = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: percentageValue) {
-                            let decimalPercentage = percentage.doubleValue/100
-                            let split = QIFSplit(amount: amount.doubleValue * decimalPercentage)
+                    if let lastSplitIndex = splits.indices.last, let amountString = transactionValues["amount"], let amount = Double(amountString), let percentage = Double(percentageValue) {
+                            let percentageDecimal = percentage/100
+                            splits[lastSplitIndex].amount = amount * percentageDecimal
+                    } else if let amountString = transactionValues["amount"], let amount = Double(amountString), let percentage = Double(percentageValue) {
+                            let decimalPercentage = percentage/100
+                            let split = QIFSplit(amount: amount * decimalPercentage)
                             splits.append(split)
                     }
                 default: ()
@@ -126,7 +126,7 @@ extension QIFTransaction {
         }
         
         self.date = transactionDate
-        self.amount = transactionAmount.doubleValue
+        self.amount = transactionamount
         
         if let checkNumber = transactionValues["checkNumber"], let transactionCheckNumber = Int(checkNumber) {
             self.checkNumber = transactionCheckNumber
