@@ -1,6 +1,6 @@
 =QIF=
 
-'''Version:''' 0.1.1
+'''Version:''' 0.2
 
 '''Author:''' Bryce Campbell
 
@@ -20,6 +20,17 @@ so that data can be migrated easily.
 ===Version History===
 
 <dl>
+<dt style="font-weight:bold">0.2</dt>
+<dd>
+<p>Minor tweaks.</p>
+<p>Remove number formatter, 
+thereby allowing library to build and run on Linux.</p>
+<p>As a result of this change, 
+QIF files previously created might not be compatible.</p>
+<p>To resolve this, 
+make sure all monetary values are represented 
+without localized formatting.</p>
+</dd>
 <dt style="font-weight:bold">0.1.2</dt>
 <dd>
 <p>Minor tweaks.</p>
