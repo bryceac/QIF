@@ -121,12 +121,12 @@ extension QIFTransaction {
             throw .none ~= transactionValues["date"] ? QIFTransactionParsingError.noDateFound : QIFTransactionParsingError.wrongDateFormat
         }
         
-        guard let amount = transactionValues["amount"], let transactionAmount = QIFTransaction.TRANSACTION_AMOUNT_FORMAT.number(from: amount) else {
+        guard let amount = transactionValues["amount"], let transactionAmount = Double(amount) else {
             throw .none ~= transactionValues["amount"] ? QIFTransactionParsingError.fieldNotFound(field: "amount") : QIFTransactionParsingError.valueNotNumerical(value: transactionValues["amount"]!, field: "amount")
         }
         
         self.date = transactionDate
-        self.amount = transactionamount
+        self.amount = transactionAmount
         
         if let checkNumber = transactionValues["checkNumber"], let transactionCheckNumber = Int(checkNumber) {
             self.checkNumber = transactionCheckNumber
