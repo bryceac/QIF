@@ -27,14 +27,6 @@ public struct QIFTransaction {
         return formatter
     }()
     
-    public static let TRANSACTION_AMOUNT_FORMAT: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = ""
-        
-        return formatter
-    }()
-    
     public init(date: Date, checkNumber: Int? = nil, vendor: String, address: String, amount: Double, category: String? = nil, memo: String, status: TransactionStatus? = nil, splits: [QIFSplit] = []) {
         self.date = date
         self.checkNumber = checkNumber
