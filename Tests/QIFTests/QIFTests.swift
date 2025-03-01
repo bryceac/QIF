@@ -104,7 +104,6 @@ final class QIFTests: XCTestCase {
     func test_parseTransactionWithPercentageSplit() throws {
         let transactionText = """
         D\(QIFTransaction.QIF_DATE_FORMATTER.string(from: Date()))
-        D03/10/2022
         T500.0
         CX
         N1260
